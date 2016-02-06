@@ -3,15 +3,14 @@
   min-height: 300px;
   font-size: 27px;
   outline: 0;
+  white-space: pre-wrap;
 }
 
 .editor .completed {
   color: green;
-  white-space: pre;
 }
 
 .editor .pending {
-  white-space: pre;
 }
 
 .editor .pending span {
