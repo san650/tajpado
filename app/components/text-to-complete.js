@@ -4,8 +4,8 @@ var { computed, on } = Ember;
 
 export default Ember.Component.extend({
   tagName: 'div',
-  attributeBindings: ['contentEditable', 'autofocus'],
-  contentEditable: true,
+  attributeBindings: ['tabindex'],
+  tabindex: 0,
   classNames: ['editor'],
   script: null,
 
