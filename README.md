@@ -1,53 +1,36 @@
 # Tajpado
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+A simple touch typing learning app written in Ember. Visit http://tajpado.herokuapp.com/ to see it in action.
 
-## Prerequisites
+## Development
 
-You will need the following things properly installed on your computer.
+### Installation
 
-* [Git](http://git-scm.com/)
-* [Node.js](http://nodejs.org/) (with NPM)
-* [Bower](http://bower.io/)
-* [Ember CLI](http://www.ember-cli.com/)
-* [PhantomJS](http://phantomjs.org/)
-
-## Installation
-
-* `git clone <repository-url>` this repository
-* change into the new directory
-* `npm install`
-* `bower install`
-
-## Running / Development
-
-* `ember server`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-
-### Code Generators
-
-Make use of the many generators for code, try `ember help generate` for more details
+```sh
+$ git clone https://github.com/san650/tajpado.git
+$ cd $_
+$ npm install
+$ bower install
+$ ember server
+```
 
 ### Running Tests
 
-* `ember test`
-* `ember test --server`
-
-### Building
-
-* `ember build` (development)
-* `ember build --environment production` (production)
+```
+ember test --server
+```
 
 ### Deploying
 
-Specify what it takes to deploy your app.
+If you're using heroku
 
-## Further Reading / Useful Links
+```
+$ heroku create APP_NAME --buildpack https://github.com/tonycoco/heroku-buildpack-ember-cli.git
+$ git push heroku master
+```
 
-* [ember.js](http://emberjs.com/)
-* [ember-cli](http://www.ember-cli.com/)
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+# License
 
+tajpado is licensed under the MIT license.
+
+See [LICENSE](./LICENSE) for the full license text.
