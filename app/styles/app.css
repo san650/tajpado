@@ -1,0 +1,20 @@
+.editor {
+  padding: 50px;
+  min-height: 300px;
+  font-size: 27px;
+  outline: 0;
+}
+
+.editor .completed {
+  color: green;
+  white-space: pre;
+}
+
+.editor .pending {
+  white-space: pre;
+}
+
+.editor .pending span {
+  color: red;
+  background-color: yellow;
+}
