@@ -7,12 +7,6 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    keyPress(actual, expected) {
-      if (actual !== expected) {
-        console.log(`Missed: actual: "${actual}", expected: "${expected}"`);
-      }
-    },
-
     completed() {
       console.log('Success!');
     }

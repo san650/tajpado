@@ -1,11 +1,9 @@
 import Ember from 'ember';
 
-var { computed, on } = Ember;
+var { computed, on, inject } = Ember;
 
 export default Ember.Component.extend({
-  tagName: 'div',
-  attributeBindings: ['tabindex'],
-  tabindex: 0,
+  keyboard: inject.service(),
   classNames: ['editor'],
   script: null,
 
@@ -21,26 +19,23 @@ export default Ember.Component.extend({
     return `<span>${text.slice(0, 1)}</span>${text.slice(1)}`.htmlSafe();
   }),
 
-  autofocus: on('didInsertElement', function() {
-    this.$().focus();
-  }),
+  connectToKeyPressEvent: on('init', function(key) {
+    this.get('keyboard').on('keyPress', key => {
+      if (this.get('isDestroying') || this.get('isDestroyed')) {
+        return;
+      }
 
-  keyPress(event) {
-    event.preventDefault();
+      var script = this.get('script');
+      var index = this.get('completedIndex');
+      var scriptChar = script.charAt(index);
 
-    var script = this.get('script');
-    var index = this.get('completedIndex');
-    var charCode = script.charCodeAt(index);
+      if (key === scriptChar) {
+        this.incrementProperty('completedIndex');
+      }
 
-    if (event.keyCode === charCode) {
-      this.incrementProperty('completedIndex');
-    }
-
-
-    this.sendAction('onKeyPress', String.fromCharCode(event.keyCode), String.fromCharCode(charCode));
-
-    if (this.get('completedIndex') === this.get('script').length) {
-      this.sendAction('onCompleted');
-    }
-  }
+      if (this.get('completedIndex') === this.get('script').length) {
+        this.sendAction('onCompleted');
+      }
+    });
+  })
 });
