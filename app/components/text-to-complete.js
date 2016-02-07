@@ -1,12 +1,16 @@
 import Ember from 'ember';
+import on from 'tajpado/utils/on';
 
-var { computed, on, inject } = Ember;
+var { computed, inject } = Ember;
 
 export default Ember.Component.extend({
   keyboard: inject.service(),
   classNames: ['editor'],
+
+  // Expected Attributes
   script: null,
 
+  // Properties
   completedIndex: 0,
 
   completed: computed('completedIndex', function() {
@@ -19,23 +23,17 @@ export default Ember.Component.extend({
     return `<span>${text.slice(0, 1)}</span>${text.slice(1)}`.htmlSafe();
   }),
 
-  connectToKeyPressEvent: on('init', function(key) {
-    this.get('keyboard').on('keyPress', key => {
-      if (this.get('isDestroying') || this.get('isDestroyed')) {
-        return;
-      }
+  connectToKeyPressEvent: on('keyboard.keyPress', function(key) {
+    var script = this.get('script');
+    var index = this.get('completedIndex');
+    var scriptChar = script.charAt(index);
 
-      var script = this.get('script');
-      var index = this.get('completedIndex');
-      var scriptChar = script.charAt(index);
+    if (key === scriptChar) {
+      this.incrementProperty('completedIndex');
+    }
 
-      if (key === scriptChar) {
-        this.incrementProperty('completedIndex');
-      }
-
-      if (this.get('completedIndex') === this.get('script').length) {
-        this.sendAction('onCompleted');
-      }
-    });
+    if (this.get('completedIndex') === this.get('script').length) {
+      this.sendAction('onCompleted');
+    }
   })
 });

@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import on from 'tajpado/utils/on';
 
-var { inject, on, $, run } = Ember;
+var { inject, $, run } = Ember;
 
 export default Ember.Controller.extend({
   keyboard: inject.service(),
@@ -17,9 +18,7 @@ export default Ember.Controller.extend({
     $(document).off('keyPress');
   }),
 
-  writeKeysToConsole: on('init', function() {
-    this.get('keyboard').on('keyPress', function(key) {
-      console.log(`Key pressed: ${key}`);
-    });
+  writeKeysToConsole: on('keyboard.keyPress', function(key) {
+    console.log(`Key pressed: ${key}`);
   })
 });
