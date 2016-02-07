@@ -18,7 +18,11 @@ export default Ember.Component.extend({
   }),
 
   pending: computed('completedIndex', function() {
-    var text = this.get('script').slice(this.get('completedIndex'));
+    return this.get('script').slice(this.get('completedIndex'));
+  }),
+
+  pendingSafe: computed('completedIndex', function() {
+    var text = this.get('pending');
 
     return `<span>${text.slice(0, 1)}</span>${text.slice(1)}`.htmlSafe();
   }),
@@ -30,6 +34,11 @@ export default Ember.Component.extend({
 
     if (key === scriptChar) {
       this.incrementProperty('completedIndex');
+      // params: key, # pending, # completed, # total
+      this.sendAction('onHit', key, this.get('pending.length'), this.get('completed.length'), this.get('script.length'));
+    } else  {
+      // params: actual, expected, # pending, # completed, # total
+      this.sendAction('onMiss', scriptChar, key, this.get('pending.length'), this.get('completed.length'), this.get('script.length'));
     }
 
     if (this.get('completedIndex') === this.get('script').length) {
