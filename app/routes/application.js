@@ -3,20 +3,9 @@ import Script from 'tajpado/models/script';
 
 export default Ember.Route.extend({
   model() {
-    return Script.find(0);
-  },
+    var activity = this.container.lookup('service:activity');
+    activity.set('script', Script.find(0));
 
-  actions: {
-    completed() {
-      console.log('Success!');
-    },
-
-    hit(key, pending, completed, total) {
-      console.log({ key, pending, completed, total });
-    },
-
-    miss(expected, actual, pending, completed, total) {
-      console.log({ expected, actual, pending, completed, total });
-    }
+    return activity;
   }
 });
