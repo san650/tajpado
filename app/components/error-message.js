@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-var { computed } = Ember;
+var { computed, run, observer } = Ember;
 
 export default Ember.Component.extend({
   classNames: ['error'],
@@ -9,12 +9,18 @@ export default Ember.Component.extend({
   isHidden: false,
 
   error: computed('activity.error', function() {
-    this.set('isHidden', !this.get('activity.error'));
+    return this.get('activity.error');
+  }),
 
-    setTimeout(() => {
+  onNewError: observer('error', function() {
+    this.set('isHidden', false);
+
+    run.cancel(this.get('timerId'));
+
+    var id = run.later(() => {
       this.set('isHidden', true);
     }, 500);
 
-    return this.get('activity.error');
+    this.set('timerId', id);
   })
 });

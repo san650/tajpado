@@ -11,14 +11,13 @@ var Activity = Ember.Object.extend({
     return this.get('completedIndex') === this.get('script.length');
   }),
 
-  completed: computed('completedIndex', function() {
+  completed: computed('script', 'completedIndex', function() {
     return this.get('script').slice(0, this.get('completedIndex'));
   }),
 
-  pending: computed('completedIndex', function() {
+  pending: computed('script', 'completedIndex', function() {
     return this.get('script').slice(this.get('completedIndex'));
-  }),
-
+  })
 });
 
 Activity.reopenClass({
