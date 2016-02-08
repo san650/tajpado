@@ -8,8 +8,11 @@ export default Ember.Route.extend({
 
   model(params) {
     var activity = Activity.find(params["activity_id"]);
-    this.set('activityManager.current', activity);
 
     return activity;
+  },
+
+  afterModel(activity) {
+    this.set('activityManager.current', activity);
   }
 });
