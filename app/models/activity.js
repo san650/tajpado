@@ -22,7 +22,7 @@ var Activity = Ember.Object.extend({
 
 Activity.reopenClass({
   find(id) {
-    return $.get('/api/activities.json')
+    return $.getJSON('/api/activities.json')
       .then(response => response.activities)
       .then(activities => activities[Number(id) - 1])
       .then(activity => Activity.create(activity));
