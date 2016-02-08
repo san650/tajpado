@@ -6,6 +6,7 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('activity', { path: 'activities/:activity_id' });
 });
 
 export default Router;
