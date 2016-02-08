@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import on from 'tajpado/utils/on';
 
-var { computed, inject } = Ember;
+var { inject } = Ember;
 
 export default Ember.Service.extend(Ember.Evented, {
   current: null,

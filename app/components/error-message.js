@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-var { computed, run } = Ember;
+var { computed } = Ember;
 
 export default Ember.Component.extend({
   classNames: ['error'],
