@@ -1,41 +1,4 @@
-.editor {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 20px;
-  min-height: 300px;
-  font-size: 32px;
-  outline: 0;
-  white-space: pre-wrap;
-}
-
-.editor .completed {
-  color: green;
-}
-
-.editor .pending {
-}
-
-.editor .pending span {
-  color: red;
-  background-color: yellow;
-}
-
-h2 {
-  color: rgba(0,0,0,0.5);
-  text-align: center;
-  font-family: serif;
-  font-size: 33px;
-}
-
-.error {
-  opacity: 1;
-  font-size: 30px;
-  text-align: center;
-  color: rgba(0,0,0,0.5);
-  white-space: pre-line;
-}
-
-.error.is-hidden {
-  transition: opacity 2s;
-  opacity: 0;
-}
+@import 'base.css';
+@import 'activity-script-viewer.css';
+@import 'activity-errors-viewer.css';
+@import 'activity-completed.css';

@@ -1,0 +1,21 @@
+.activity-script-viewer {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 300px;
+  font-size: 32px;
+  outline: 0;
+  white-space: pre-wrap;
+}
+
+.activity-script-viewer .completed {
+  color: green;
+}
+
+.activity-script-viewer .pending {
+}
+
+.activity-script-viewer .pending span {
+  color: red;
+  background-color: yellow;
+}

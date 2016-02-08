@@ -3,7 +3,7 @@ import Ember from 'ember';
 var { computed } = Ember;
 
 export default Ember.Component.extend({
-  classNames: ['editor'],
+  tagName: '',
 
   // Expected Attributes
   activity: null,

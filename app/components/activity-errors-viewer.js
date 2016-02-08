@@ -3,7 +3,7 @@ import Ember from 'ember';
 var { computed, run, observer } = Ember;
 
 export default Ember.Component.extend({
-  classNames: ['error'],
+  classNames: ['activity-errors-viewer'],
   classNameBindings: ['isHidden'],
 
   isHidden: false,
