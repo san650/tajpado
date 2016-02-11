@@ -1,6 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'tajpado/tests/helpers/module-for-acceptance';
 import Pretender from 'pretender';
+import page from '../pages/activity';
 
 moduleForAcceptance('Acceptance | ready set go');
 
@@ -10,10 +11,6 @@ const ACTIVITIES = {
   ]
 };
 
-function type(c) {
-  keyEvent('.activity-script-viewer', 'keypress', c.charCodeAt(0));
-}
-
 test('passes the activity', function(assert) {
   new Pretender(function(){
     this.get('/api/activities.json', function() {
@@ -21,28 +18,29 @@ test('passes the activity', function(assert) {
     });
   });
 
-  visit('/');
+  page.visit();
 
   andThen(function() {
     assert.equal(currentURL(), '/activities/1');
     assert.equal(currentRouteName(), 'activity');
-    assert.equal(find('.activity-script-viewer .completed').text(), '');
-    assert.equal(find('.activity-script-viewer .pending').text(), 'abcd');
+    assert.equal(page.completed, '');
+    assert.equal(page.pending, 'abcd');
   });
 
-  type('a');
+  page.typeLetter('a');
 
   andThen(function() {
-    assert.equal(find('.activity-script-viewer .completed').text(), 'a');
-    assert.equal(find('.activity-script-viewer .pending').text(), 'bcd');
+    assert.equal(page.completed, 'a');
+    assert.equal(page.pending, 'bcd');
   });
 
-  type('b');
-  type('c');
-  type('d');
+  page.typeLetter('b');
+  page.typeLetter('c');
+  page.typeLetter('d');
 
   andThen(function() {
-    assert.equal(find('.activity-script-viewer .completed').text(), 'abcd');
-    assert.equal(find('.activity-script-viewer .pending').text(), '');
+    assert.equal(page.completed, 'abcd');
+    assert.equal(page.pending, '');
+    assert.equal(page.activityCompletedMessage, 'Next activity');
   });
 });
