@@ -30,8 +30,7 @@ export default Ember.Service.extend(Ember.Evented, {
       this.trigger('onMiss', scriptChar, key, this.get('current.pending.length'), this.get('current.completed.length'), script.length);
     }
 
-    if (this.get('current.completedIndex') === script.length) {
-      this.set('current.isCompleted', true);
+    if (this.get('current.isCompleted')) {
       this.trigger('onCompleted');
     }
   })
