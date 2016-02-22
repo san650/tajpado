@@ -7,7 +7,7 @@ moduleForAcceptance('Acceptance | ready set go');
 
 const ACTIVITIES = {
   activities: [
-    { id: 1, script: "abcd" }
+    { id: 1, script: "aBcd" }
   ]
 };
 
@@ -24,22 +24,29 @@ test('passes the activity', function(assert) {
     assert.equal(currentURL(), '/activities/1');
     assert.equal(currentRouteName(), 'activity');
     assert.equal(page.completed, '');
-    assert.equal(page.pending, 'abcd');
+    assert.equal(page.pending, 'aBcd');
   });
 
   page.typeLetter('a');
 
   andThen(function() {
     assert.equal(page.completed, 'a');
-    assert.equal(page.pending, 'bcd');
+    assert.equal(page.pending, 'Bcd');
   });
 
   page.typeLetter('b');
+
+  andThen(function(){
+    assert.equal(page.completed, 'a');
+    assert.equal(page.pending, 'Bcd', 'The match is case sensitive.');
+  });
+
+  page.typeLetter('B');
   page.typeLetter('c');
   page.typeLetter('d');
 
   andThen(function() {
-    assert.equal(page.completed, 'abcd');
+    assert.equal(page.completed, 'aBcd');
     assert.equal(page.pending, '');
     assert.equal(page.activityCompletedMessage, 'Next activity');
   });
