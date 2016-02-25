@@ -14,5 +14,16 @@ export default Ember.Route.extend({
 
   afterModel(activity) {
     this.set('activityManager.current', activity);
+  },
+
+  actions: {
+  	restart(){
+  		this.get('activityManager.current').setProperties({
+  			completedIndex: 0,
+  			error: null
+  		});
+
+  		return false;
+  	}
   }
 });
