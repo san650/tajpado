@@ -44,3 +44,35 @@ test('passes the activity', function(assert) {
     assert.equal(page.activityCompletedMessage, 'Next activity');
   });
 });
+
+test('restart activity', function(assert){
+  new Pretender(function(){
+    this.get('/api/activities.json', function() {
+      return [200, {"Content-Type": "application/json"}, JSON.stringify(ACTIVITIES)];
+    });
+  });
+
+  page.visit();
+
+  andThen(function(){
+    assert.equal(currentURL(), '/activities/1');
+    assert.equal(currentRouteName(), 'activity');
+    assert.equal(page.completed, '');
+    assert.equal(page.pending, 'abcd');
+  });
+
+  page.typeLetter('a');
+
+  andThen(function(){
+    assert.equal(page.completed, 'a');
+    assert.equal(page.pending, 'bcd');
+  });
+
+  page.restart();
+
+  andThen(function(){
+    assert.equal(page.completed, '');
+    assert.equal(page.pending, 'abcd');
+    assert.equal(page.restartHasFocus, false, 'The button does not has the focus after click.');
+  });
+});

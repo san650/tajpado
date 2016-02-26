@@ -1,4 +1,4 @@
-import { create, text, visitable } from 'tajpado/tests/page-object';
+import { create, text, visitable, clickable } from 'tajpado/tests/page-object';
 
 function typeLetter(selector) {
   return {
@@ -16,5 +16,7 @@ export default create({
   typeLetter: typeLetter('.activity-script-viewer'),
   completed: text('.activity-script-viewer .completed'),
   pending: text('.activity-script-viewer .pending'),
-  activityCompletedMessage: text('.activity-completed')
+  activityCompletedMessage: text('.activity-completed'),
+  restart: clickable('.btn-restart'),
+  restartHasFocus: $(document.activeElement).hasClass('btn-restart')
 });
