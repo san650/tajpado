@@ -1,12 +1,8 @@
 import Ember from 'ember';
 import on from 'tajpado/utils/on';
+import ErrorIndex from 'tajpado/models/error-index';
 
 var { inject } = Ember;
-
-var errorIndex = Ember.Object.extend({
-  index: 0,
-  count: 0
-});
 
 export default Ember.Service.extend(Ember.Evented, {
   current: null,
@@ -32,7 +28,7 @@ export default Ember.Service.extend(Ember.Evented, {
 
       var item = this.get('current.errorsIndex').findBy('index', index);
       if(item === undefined){
-        this.get('current.errorsIndex').pushObject(errorIndex.create({
+        this.get('current.errorsIndex').pushObject(ErrorIndex.create({
           index: index,
           count: 1
         }));
