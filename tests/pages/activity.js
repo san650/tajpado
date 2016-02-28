@@ -12,9 +12,11 @@ function typeLetter(selector) {
 
 export default create({
   visit: visitable('/'),
+  visitActivity: visitable('/activities/:activity_id'),
 
   typeLetter: typeLetter('.activity-script-viewer'),
   completed: text('.activity-script-viewer .completed'),
   pending: text('.activity-script-viewer .pending'),
-  activityCompletedMessage: text('.activity-completed')
+  activityCompletedMessage: text('.activity-completed'),
+  errorCount: text('.error-count')
 });

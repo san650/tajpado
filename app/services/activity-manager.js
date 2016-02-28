@@ -24,7 +24,10 @@ export default Ember.Service.extend(Ember.Evented, {
       // params: key, # pending, # completed, # total
       this.trigger('onHit', key, this.get('current.pending.length'), this.get('current.completed.length'), script.length);
     } else  {
-      this.set('current.error', `Expected "${scriptChar}" but was "${key}"`);
+      this.get('current').setProperties({
+        error: `Expected "${scriptChar}" but was "${key}"`,
+        errorCount: this.get('current.errorCount') + 1
+      });
 
       // params: actual, expected, # pending, # completed, # total
       this.trigger('onMiss', scriptChar, key, this.get('current.pending.length'), this.get('current.completed.length'), script.length);

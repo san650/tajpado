@@ -6,7 +6,8 @@ var Activity = Ember.Object.extend({
   script: '',
   completedIndex: 0,
   error: null,
-
+  errorCount: 0,
+  
   isCompleted: computed('script', 'completedIndex', function() {
     return this.get('completedIndex') === this.get('script.length');
   }),
