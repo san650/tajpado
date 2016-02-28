@@ -3,6 +3,11 @@ import on from 'tajpado/utils/on';
 
 var { inject } = Ember;
 
+var errorIndex = Ember.Object.extend({
+  index: 0,
+  count: 0
+});
+
 export default Ember.Service.extend(Ember.Evented, {
   current: null,
 
@@ -12,7 +17,6 @@ export default Ember.Service.extend(Ember.Evented, {
     if (!this.get('current') || this.get('current.isCompleted')) {
       return;
     }
-
 
     var script = this.get('current.script');
     var index = this.get('current.completedIndex');
@@ -24,10 +28,17 @@ export default Ember.Service.extend(Ember.Evented, {
       // params: key, # pending, # completed, # total
       this.trigger('onHit', key, this.get('current.pending.length'), this.get('current.completed.length'), script.length);
     } else  {
-      this.get('current').setProperties({
-        error: `Expected "${scriptChar}" but was "${key}"`,
-        errorCount: this.get('current.errorCount') + 1
-      });
+      this.set('current.error', `Expected "${scriptChar}" but was "${key}"`);
+
+      var item = this.get('current.errorsIndex').findBy('index', index);
+      if(item === undefined){
+        this.get('current.errorsIndex').pushObject(errorIndex.create({
+          index: index,
+          count: 1
+        }));
+      } else {
+        item.set('count', item.get('count') + 1);
+      }
 
       // params: actual, expected, # pending, # completed, # total
       this.trigger('onMiss', scriptChar, key, this.get('current.pending.length'), this.get('current.completed.length'), script.length);

@@ -9,7 +9,18 @@ export default Ember.Component.extend({
   activity: null,
 
   // Computed
-  completed: computed.alias('activity.completed'),
+  completed: computed('activity.completed', function(){
+    var result = this.get('activity.completed');
+    var charArray = result.split("");
+
+    this.get('activity.errorsIndex').forEach((item)=>{
+      var value = charArray[item.index];
+
+      charArray[item.index] = `<span class='error-mark' title='Attempts: ${item.count}'>${value}</span>`;
+    });
+    return charArray.join('').htmlSafe();
+  }),
+
   pending: computed('activity.pending', function() {
     var text = this.get('activity.pending');
 

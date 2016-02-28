@@ -19,3 +19,10 @@
   color: red;
   background-color: yellow;
 }
+
+.error-mark{
+  color: #008000;
+  background-color: rgba(0, 128, 0, 0.14);
+  border: 1px dotted #008000;
+  cursor: help;
+}

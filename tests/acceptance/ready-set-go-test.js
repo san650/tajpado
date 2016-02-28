@@ -60,6 +60,7 @@ test('count errors', function(assert){
     assert.equal(currentRouteName(), 'activity');
     assert.equal(page.pending, 'aBcd');
     assert.equal(page.errorCount, '0', 'Starts the game without errors.');
+    assert.equal(page.errorMarkCount, 0, 'No error marks.');
 
     page.typeLetter('a');
 
@@ -71,15 +72,24 @@ test('count errors', function(assert){
 
     andThen(function(){
       assert.equal(page.errorCount, '1', 'The text is case sensitive,  b is not equal B.');
+      assert.equal(page.errorMarkCount, 0);
     });
 
     page.typeLetter('r');
 
     andThen(function(){
       assert.equal(page.errorCount, '2', 'Wrong letter.');
+      assert.equal(page.errorMarkCount, 0);
     });
 
     page.typeLetter('B');
+    
+    andThen(function(){
+      //The error span is rendered after pass the current index
+      assert.equal(page.errorMarkCount, 1, 'Two errors in the same index.');
+      assert.equal(page.errorMarkTitle, 'Attempts: 2', 'Title shows: "Attempts: 2"');
+    });
+    
     page.typeLetter('c');
     page.typeLetter('d');
 
