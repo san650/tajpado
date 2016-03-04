@@ -7,17 +7,20 @@ moduleForAcceptance('Acceptance | ready set go');
 
 const ACTIVITIES = {
   activities: [
-    { id: 1, script: "abcd" },
-    { id: 2, script: "aBcd" }
+    { id: 1, script: "aBcd" }
   ]
 };
 
-test('passes the activity', function(assert) {
-  new Pretender(function(){
-    this.get('/api/activities.json', function() {
+function setupActivity(){
+  return new Pretender(function(){
+    this.get('/api/activities.json', function(){
       return [200, {"Content-Type": "application/json"}, JSON.stringify(ACTIVITIES)];
     });
   });
+}
+
+test('passes the activity', function(assert) {
+  setupActivity();
 
   page.visit();
 
@@ -25,41 +28,35 @@ test('passes the activity', function(assert) {
     assert.equal(currentURL(), '/activities/1');
     assert.equal(currentRouteName(), 'activity');
     assert.equal(page.completed, '');
-    assert.equal(page.pending, 'abcd');
+    assert.equal(page.pending, 'aBcd');
   });
 
   page.typeLetter('a');
 
   andThen(function() {
     assert.equal(page.completed, 'a');
-    assert.equal(page.pending, 'bcd');
+    assert.equal(page.pending, 'Bcd');
   });
 
-  page.typeLetter('b');
+  page.typeLetter('B');
   page.typeLetter('c');
   page.typeLetter('d');
 
   andThen(function() {
-    assert.equal(page.completed, 'abcd');
+    assert.equal(page.completed, 'aBcd');
     assert.equal(page.pending, '');
     assert.equal(page.activityCompletedMessage, 'Next activity');
   });
 });
 
 test('count errors', function(assert){
-  new Pretender(function(){
-    this.get('/api/activities.json', function(){
-      return [200, {"Content-Type": "application/json"}, JSON.stringify(ACTIVITIES)];
-    });
-  });
+  setupActivity();
 
-  page.visitActivity({activity_id: 2});
+  page.visit();
 
   andThen(function(){
-    assert.equal(currentURL(), '/activities/2');
-    assert.equal(currentRouteName(), 'activity');
-    assert.equal(page.pending, 'aBcd');
     assert.equal(page.errorCount, '0', 'Starts the game without errors.');
+    assert.equal(page.errorMarkCount, 0, 'No error marks.');
 
     page.typeLetter('a');
 
@@ -71,15 +68,24 @@ test('count errors', function(assert){
 
     andThen(function(){
       assert.equal(page.errorCount, '1', 'The text is case sensitive,  b is not equal B.');
+      assert.equal(page.errorMarkCount, 0);
     });
 
     page.typeLetter('r');
 
     andThen(function(){
       assert.equal(page.errorCount, '2', 'Wrong letter.');
+      assert.equal(page.errorMarkCount, 0);
     });
 
     page.typeLetter('B');
+    
+    andThen(function(){
+      //The error span is rendered after pass the current index
+      assert.equal(page.errorMarkCount, 1, 'Two errors in the same index.');
+      assert.equal(page.errorMarkTitle, 'Attempts: 2', 'Title shows: "Attempts: 2"');
+    });
+    
     page.typeLetter('c');
     page.typeLetter('d');
 
