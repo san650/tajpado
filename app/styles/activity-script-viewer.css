@@ -16,13 +16,13 @@
 }
 
 .activity-script-viewer .pending span {
-  color: red;
-  background-color: yellow;
+  color: white;
+  background-color: green;
 }
 
 .error-mark{
-  color: #008000;
-  background-color: rgba(0, 128, 0, 0.14);
-  border: 1px dotted #008000;
+  color: #801B00;
   cursor: help;
+  box-sizing: border-box;
+  border-bottom: 2px dotted #801B00;
 }

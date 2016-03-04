@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import on from 'tajpado/utils/on';
-import ErrorIndex from 'tajpado/models/error-index';
+import Miss from 'tajpado/models/miss';
 
 var { inject } = Ember;
 
@@ -24,17 +24,15 @@ export default Ember.Service.extend(Ember.Evented, {
       // params: key, # pending, # completed, # total
       this.trigger('onHit', key, this.get('current.pending.length'), this.get('current.completed.length'), script.length);
     } else  {
-      this.set('current.error', `Expected "${scriptChar}" but was "${key}"`);
+      var errorMessage = `Expected "${scriptChar}" but was "${key}"`;
 
-      var item = this.get('current.errorsIndex').findBy('index', index);
-      if(item === undefined){
-        this.get('current.errorsIndex').pushObject(ErrorIndex.create({
+      this.set('current.error', errorMessage);
+
+      this.get('current.errors').pushObject(Miss.create({
           index: index,
-          count: 1
-        }));
-      } else {
-        item.set('count', item.get('count') + 1);
-      }
+          message: errorMessage
+        })
+      );
 
       // params: actual, expected, # pending, # completed, # total
       this.trigger('onMiss', scriptChar, key, this.get('current.pending.length'), this.get('current.completed.length'), script.length);

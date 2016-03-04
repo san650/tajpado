@@ -7,18 +7,16 @@ var Activity = Ember.Object.extend({
   completedIndex: 0,
   error: null,
   
-  errorsIndex: computed(function(){
+  errors: computed(function(){
     return [];
   }),
-
-  totalErrors: computed('errorsIndex.@each.count',function(){
-    var total = 0;
-    this.get('errorsIndex').forEach(item => {
-      total += item.count;
-    });
-    return total;
+  errorIndexes: computed('errors.[]', function(){
+    return this.get('errors').mapBy('index').uniq();
   }),
-  
+  errorsCount: computed('errors.[]', function(){
+    return this.get('errors').length;
+  }),
+
   isCompleted: computed('script', 'completedIndex', function() {
     return this.get('completedIndex') === this.get('script.length');
   }),

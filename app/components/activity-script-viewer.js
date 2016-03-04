@@ -8,15 +8,17 @@ export default Ember.Component.extend({
   // Expected Attributes
   activity: null,
 
+  getErrorCountByIndex(index) {
+    return this.get('activity.errors').filterBy('index', index).length;
+  },
+
   // Computed
   completed: computed('activity.completed', function(){
-    var result = this.get('activity.completed');
-    var charArray = result.split("");
+    var completedText = this.get('activity.completed');
+    var charArray = completedText.split("");
 
-    this.get('activity.errorsIndex').forEach((item)=>{
-      var value = charArray[item.index];
-
-      charArray[item.index] = `<span class='error-mark' title='Attempts: ${item.count}'>${value}</span>`;
+    this.get('activity.errorIndexes').forEach( item => {
+      charArray[item] = `<span class='error-mark' title='Attempts: ${this.getErrorCountByIndex(item)}'>${charArray[item]}</span>`;
     });
     return charArray.join('').htmlSafe();
   }),
