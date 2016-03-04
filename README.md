@@ -29,6 +29,11 @@ $ heroku create APP_NAME --buildpack https://github.com/tonycoco/heroku-buildpac
 $ git push heroku master
 ```
 
+### Project's health
+
+[![Build Status](https://travis-ci.org/san650/tajpado.svg?branch=master)](https://travis-ci.org/san650/tajpado)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/42a8473434964b6cb238c21a8846060c)](https://www.codacy.com/app/san650/tajpado)
+
 # License
 
 tajpado is licensed under the MIT license.
