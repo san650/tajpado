@@ -20,8 +20,12 @@ export default create({
   activityCompletedMessage: text('.activity-completed'),
 
   restart: clickable('.btn-restart'),
-  restartHasFocus: $(document.activeElement).hasClass('btn-restart'),
-
+  restartHasFocus: {
+    isDescriptor: true,
+    get: function() {
+      return $(document.activeElement).hasClass('btn-restart');
+    }
+  },
   errorCount: text('.error-count'),
   errorMarkCount: count('.error-mark'),
   errorMarkTitle: attribute('title', '.error-mark')

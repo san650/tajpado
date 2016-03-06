@@ -53,19 +53,7 @@ test('restart activity', function(assert){
   setupActivity();
 
   page.visit();
-
-  andThen(function(){
-    assert.equal(page.completed, '');
-    assert.equal(page.pending, 'aBcd');
-  });
-
   page.typeLetter('a');
-
-  andThen(function(){
-    assert.equal(page.completed, 'a');
-    assert.equal(page.pending, 'Bcd');
-  });
-
   page.restart();
 
   andThen(function(){
@@ -111,12 +99,5 @@ test('count errors', function(assert){
     //The error span is rendered after pass the current index
     assert.equal(page.errorMarkCount, 1, 'Two errors in the same index.');
     assert.equal(page.errorMarkTitle, 'Attempts: 2', 'Title shows: "Attempts: 2"');
-  });
-  
-  page.typeLetter('c');
-  page.typeLetter('d');
-
-  andThen(function(){
-    assert.equal(page.errorCount, '2', 'Game completed.');
   });
 });
