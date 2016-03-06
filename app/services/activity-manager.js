@@ -41,5 +41,13 @@ export default Ember.Service.extend(Ember.Evented, {
     if (this.get('current.isCompleted')) {
       this.trigger('onCompleted');
     }
-  })
+  }),
+
+  restartActivity(){
+    this.get('current').setProperties({
+      completedIndex: 0,
+      error: null,
+      errors: []
+    });
+  }
 });
