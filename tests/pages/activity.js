@@ -1,4 +1,5 @@
 import { create, text, visitable, clickable, count, attribute } from 'tajpado/tests/page-object';
+import {hasFocus} from 'tajpado/helpers/has-focus';
 
 function typeLetter(selector) {
   return {
@@ -20,12 +21,7 @@ export default create({
   activityCompletedMessage: text('.activity-completed'),
 
   restart: clickable('.btn-restart'),
-  restartHasFocus: {
-    isDescriptor: true,
-    get: function() {
-      return $(document.activeElement).hasClass('btn-restart');
-    }
-  },
+  restartHasFocus: hasFocus('.btn-restart'),
   errorCount: text('.error-count'),
   errorMarkCount: count('.error-mark'),
   errorMarkTitle: attribute('title', '.error-mark')
