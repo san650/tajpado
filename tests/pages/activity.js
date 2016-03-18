@@ -1,5 +1,5 @@
 import { create, text, visitable, clickable, count, attribute } from 'tajpado/tests/page-object';
-import {hasFocus} from 'tajpado/helpers/has-focus';
+import {hasFocus} from 'tajpado/tests/helpers/has-focus';
 
 function typeLetter(selector) {
   return {

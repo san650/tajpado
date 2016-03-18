@@ -2,9 +2,11 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 	tagName: 'button',
-	classNameBindings: ['cssClass'],
-	/*Expected property*/
-	cssClass: '',
+
+  classNameBindings: ['cssClass'],
+
+  classNames: ['btn-restart'],
+
 	/*Expected property*/
 	text: 'Click me',
 

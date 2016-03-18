@@ -9,7 +9,7 @@ export function hasFocus(selector){
     	}
 
     	var activeElement = Ember.$(document.activeElement).get(0);
-    	var element = Ember.$(selector).get(0); 
+    	var element = Ember.$(selector).get(0);
       return activeElement === element;
     }
   };
