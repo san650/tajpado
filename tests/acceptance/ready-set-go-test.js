@@ -49,6 +49,20 @@ test('passes the activity', function(assert) {
   });
 });
 
+test('restart activity', function(assert){
+  setupActivity();
+
+  page.visit();
+  page.typeLetter('a');
+  page.restart();
+
+  andThen(function(){
+    assert.equal(page.completed, '');
+    assert.equal(page.pending, 'aBcd');
+    assert.ok(!page.restartHasFocus, 'The button does not has the focus after click.');
+  });
+});
+
 test('count errors', function(assert){
   setupActivity();
 
@@ -56,42 +70,34 @@ test('count errors', function(assert){
 
   andThen(function(){
     assert.equal(page.errorCount, '0', 'Starts the game without errors.');
-    assert.equal(page.errorMarkCount, 0, 'No error marks.');
-
-    page.typeLetter('a');
-
-    andThen(function(){
-      assert.equal(page.errorCount, '0');      
-    });
-
-    page.typeLetter('b');
-
-    andThen(function(){
-      assert.equal(page.errorCount, '1', 'The text is case sensitive,  b is not equal B.');
-      assert.equal(page.errorMarkCount, 0);
-    });
-
-    page.typeLetter('r');
-
-    andThen(function(){
-      assert.equal(page.errorCount, '2', 'Wrong letter.');
-      assert.equal(page.errorMarkCount, 0);
-    });
-
-    page.typeLetter('B');
-    
-    andThen(function(){
-      //The error span is rendered after pass the current index
-      assert.equal(page.errorMarkCount, 1, 'Two errors in the same index.');
-      assert.equal(page.errorMarkTitle, 'Attempts: 2', 'Title shows: "Attempts: 2"');
-    });
-    
-    page.typeLetter('c');
-    page.typeLetter('d');
-
-    andThen(function(){
-      assert.equal(page.errorCount, '2', 'Game completed.');
-    });
+    assert.ok(!page.errorMarkCount, 'No error marks.');
   });
 
+  page.typeLetter('a');
+
+  andThen(function(){
+    assert.equal(page.errorCount, '0');
+  });
+
+  page.typeLetter('b');
+
+  andThen(function(){
+    assert.equal(page.errorCount, '1', 'The text is case sensitive,  b is not equal B.');
+    assert.ok(!page.errorMarkCount, 0);
+  });
+
+  page.typeLetter('r');
+
+  andThen(function(){
+    assert.equal(page.errorCount, '2', 'Wrong letter.');
+    assert.ok(!page.errorMarkCount);
+  });
+
+  page.typeLetter('B');
+
+  andThen(function(){
+    //The error span is rendered after pass the current index
+    assert.ok(page.errorMarkCount, 'Two errors in the same index.');
+    assert.equal(page.errorMarkTitle, 'Attempts: 2', 'Title shows: "Attempts: 2"');
+  });
 });

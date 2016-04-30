@@ -1,4 +1,5 @@
-import { create, text, visitable, count, attribute } from 'tajpado/tests/page-object';
+import { create, text, visitable, clickable, count, attribute } from 'tajpado/tests/page-object';
+import {hasFocus} from 'tajpado/tests/helpers/has-focus';
 
 function typeLetter(selector) {
   return {
@@ -18,6 +19,9 @@ export default create({
   completed: text('.activity-script-viewer .completed'),
   pending: text('.activity-script-viewer .pending'),
   activityCompletedMessage: text('.activity-completed'),
+
+  restart: clickable('.btn-restart'),
+  restartHasFocus: hasFocus('.btn-restart'),
   errorCount: text('.error-count'),
   errorMarkCount: count('.error-mark'),
   errorMarkTitle: attribute('title', '.error-mark')
