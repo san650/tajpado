@@ -38,6 +38,13 @@ test('passes the activity', function(assert) {
     assert.equal(page.pending, 'Bcd');
   });
 
+  page.typeLetter('b');
+
+  andThen(function(){
+    assert.equal(page.completed, 'a');
+    assert.equal(page.pending, 'Bcd', 'The match is case sensitive.');
+  });
+
   page.typeLetter('B');
   page.typeLetter('c');
   page.typeLetter('d');
@@ -61,7 +68,7 @@ test('count errors', function(assert){
     page.typeLetter('a');
 
     andThen(function(){
-      assert.equal(page.errorCount, '0');      
+      assert.equal(page.errorCount, '0');
     });
 
     page.typeLetter('b');
@@ -79,13 +86,13 @@ test('count errors', function(assert){
     });
 
     page.typeLetter('B');
-    
+
     andThen(function(){
-      //The error span is rendered after pass the current index
+      // the error span is rendered after pass the current index
       assert.equal(page.errorMarkCount, 1, 'Two errors in the same index.');
       assert.equal(page.errorMarkTitle, 'Attempts: 2', 'Title shows: "Attempts: 2"');
     });
-    
+
     page.typeLetter('c');
     page.typeLetter('d');
 
@@ -93,5 +100,4 @@ test('count errors', function(assert){
       assert.equal(page.errorCount, '2', 'Game completed.');
     });
   });
-
 });
