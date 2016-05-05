@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-var { computed, run, observer } = Ember;
+const { computed, run, observer } = Ember;
 
 export default Ember.Component.extend({
   classNames: ['activity-errors-viewer'],
@@ -17,7 +17,7 @@ export default Ember.Component.extend({
 
     run.cancel(this.get('timerId'));
 
-    var id = run.later(() => {
+    let id = run.later(() => {
       this.set('isHidden', true);
     }, 500);
 

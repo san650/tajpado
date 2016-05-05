@@ -1,19 +1,19 @@
 import Ember from 'ember';
 
-var { computed, $ } = Ember;
+const { computed, $ } = Ember;
 
-var Activity = Ember.Object.extend({
+const Activity = Ember.Object.extend({
   script: '',
   completedIndex: 0,
   error: null,
-  
-  errors: computed(function(){
+
+  errors: computed(function() {
     return [];
   }),
-  errorIndexes: computed('errors.[]', function(){
+  errorIndexes: computed('errors.[]', function() {
     return this.get('errors').mapBy('index').uniq();
   }),
-  errorsCount: computed('errors.[]', function(){
+  errorsCount: computed('errors.[]', function() {
     return this.get('errors').length;
   }),
 
@@ -33,9 +33,9 @@ var Activity = Ember.Object.extend({
 Activity.reopenClass({
   find(id) {
     return $.getJSON('/api/activities.json')
-      .then(response => response.activities)
-      .then(activities => activities[Number(id) - 1])
-      .then(activity => Activity.create(activity));
+      .then((response) => response.activities)
+      .then((activities) => activities[Number(id) - 1])
+      .then((activity) => Activity.create(activity));
   }
 });
 

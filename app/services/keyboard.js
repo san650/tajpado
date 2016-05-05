@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-var { computed } = Ember;
+const { computed } = Ember;
 
 export default Ember.Service.extend(Ember.Evented, {
   keys: computed(function() {
@@ -16,7 +16,7 @@ export default Ember.Service.extend(Ember.Evented, {
     event.preventDefault();
 
     // FIXME: validate letter against a white list of supported alphabet letters
-    var letter = String.fromCharCode(event.which);
+    let letter = String.fromCharCode(event.which);
 
     this.get('keys').pushObject(letter);
     this.trigger('keyPress', letter);

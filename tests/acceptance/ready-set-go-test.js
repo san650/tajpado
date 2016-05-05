@@ -7,14 +7,14 @@ moduleForAcceptance('Acceptance | ready set go');
 
 const ACTIVITIES = {
   activities: [
-    { id: 1, script: "aBcd" }
+    { id: 1, script: 'aBcd' }
   ]
 };
 
-function setupActivity(){
-  return new Pretender(function(){
-    this.get('/api/activities.json', function(){
-      return [200, {"Content-Type": "application/json"}, JSON.stringify(ACTIVITIES)];
+function setupActivity() {
+  return new Pretender(function() {
+    this.get('/api/activities.json', function() {
+      return [200, { 'Content-Type': 'application/json' }, JSON.stringify(ACTIVITIES)];
     });
   });
 }
@@ -40,7 +40,7 @@ test('passes the activity', function(assert) {
 
   page.typeLetter('b');
 
-  andThen(function(){
+  andThen(function() {
     assert.equal(page.completed, 'a');
     assert.equal(page.pending, 'Bcd', 'The match is case sensitive.');
   });
@@ -56,38 +56,38 @@ test('passes the activity', function(assert) {
   });
 });
 
-test('count errors', function(assert){
+test('count errors', function(assert) {
   setupActivity();
 
   page.visit();
 
-  andThen(function(){
+  andThen(function() {
     assert.equal(page.errorCount, '0', 'Starts the game without errors.');
     assert.equal(page.errorMarkCount, 0, 'No error marks.');
 
     page.typeLetter('a');
 
-    andThen(function(){
+    andThen(function() {
       assert.equal(page.errorCount, '0');
     });
 
     page.typeLetter('b');
 
-    andThen(function(){
+    andThen(function() {
       assert.equal(page.errorCount, '1', 'The text is case sensitive,  b is not equal B.');
       assert.equal(page.errorMarkCount, 0);
     });
 
     page.typeLetter('r');
 
-    andThen(function(){
+    andThen(function() {
       assert.equal(page.errorCount, '2', 'Wrong letter.');
       assert.equal(page.errorMarkCount, 0);
     });
 
     page.typeLetter('B');
 
-    andThen(function(){
+    andThen(function() {
       // the error span is rendered after pass the current index
       assert.equal(page.errorMarkCount, 1, 'Two errors in the same index.');
       assert.equal(page.errorMarkTitle, 'Attempts: 2', 'Title shows: "Attempts: 2"');
@@ -96,7 +96,7 @@ test('count errors', function(assert){
     page.typeLetter('c');
     page.typeLetter('d');
 
-    andThen(function(){
+    andThen(function() {
       assert.equal(page.errorCount, '2', 'Game completed.');
     });
   });
