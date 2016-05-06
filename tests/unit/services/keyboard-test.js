@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
 
-var { merge } = Ember;
+const { merge } = Ember;
 
 moduleFor('service:keyboard', 'Unit | Service | keyboard');
 

@@ -18,9 +18,9 @@ import Ember from 'ember';
  * @return {Object}
  */
 export default function on(eventKey, cb) {
-  var args = eventKey.split('.'),
-      eventName,
-      dependentKey;
+  let args = eventKey.split('.');
+  let eventName;
+  let dependentKey;
 
   if (args.length === 1) {
     eventName = args[0];

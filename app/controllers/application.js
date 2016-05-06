@@ -1,12 +1,12 @@
 import Ember from 'ember';
 
-var { inject, $, run, on } = Ember;
+let { inject, $, run, on } = Ember;
 
 export default Ember.Controller.extend({
   keyboard: inject.service(),
 
   initializeListener: on('init', function() {
-    $(document).on('keypress', null, event => {
+    $(document).on('keypress', null, (event) => {
       run(() => {
         this.get('keyboard').pushKeyPressEvent(event);
       });
@@ -15,5 +15,5 @@ export default Ember.Controller.extend({
 
   teardownListener: on('isDestroying', function() {
     $(document).off('keyPress');
-  }),
+  })
 });
