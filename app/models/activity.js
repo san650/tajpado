@@ -4,6 +4,8 @@ const { computed, $ } = Ember;
 
 const Activity = Ember.Object.extend({
   script: '',
+  title: '',
+  subtitle: '',
   completedIndex: 0,
   error: null,
 

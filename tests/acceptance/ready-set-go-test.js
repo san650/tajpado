@@ -8,7 +8,12 @@ moduleForAcceptance('Acceptance | ready set go');
 
 const ACTIVITIES = {
   activities: [
-    { id: 1, script: 'aBcd' }
+    {
+      id: 1,
+      title: 'title',
+      subtitle: 'subtitle',
+      script: 'aBcd'
+    }
   ]
 };
 
@@ -78,4 +83,15 @@ test('count errors', async function(assert) {
   await page.write('cd');
 
   assert.equal(page.errorCount, '2', 'Game completed.');
+});
+
+test('displays the title and subtitle', function(assert) {
+  setupActivity();
+
+  page.visit();
+
+  andThen(function() {
+    assert.equal(page.title, 'title', 'Displays the title');
+    assert.equal(page.subtitle, 'subtitle', 'Display the subtitle');
+  });
 });
