@@ -1,18 +1,5 @@
 import { create, text, visitable, count, attribute } from 'tajpado/tests/page-object';
-
-function typeLetters(selector) {
-  return {
-    isDescriptor: true,
-
-    value(text) {
-      for (let i = 0; i < text.length; i++) {
-        keyEvent(selector, 'keypress', text.charCodeAt(i));
-      }
-
-      return this;
-    }
-  };
-}
+import typeLetters from './helpers/type-letters';
 
 export default create({
   visit: visitable('/'),
