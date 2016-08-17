@@ -24,5 +24,8 @@ export default create({
   activityCompletedMessage: text('.activity-completed'),
   errorCount: text('.error-count'),
   errorMarkCount: count('.error-mark'),
-  errorMarkTitle: attribute('title', '.error-mark')
+  errorMarkTitle: attribute('title', '.error-mark'),
+
+  title: text('h3'),
+  subtitle: text('h4')
 });
