@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-let { inject, $, run, on } = Ember;
+const { inject, $, run, on } = Ember;
 
 export default Ember.Controller.extend({
   keyboard: inject.service(),
