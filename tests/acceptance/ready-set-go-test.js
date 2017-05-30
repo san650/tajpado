@@ -4,7 +4,19 @@ import moduleForAcceptance from 'tajpado/tests/helpers/module-for-acceptance';
 import Pretender from 'pretender';
 import page from '../pages/activity';
 
-moduleForAcceptance('Acceptance | ready set go');
+moduleForAcceptance('Acceptance | ready set go', {
+  beforeEach() {
+    this.server = new Pretender(function() {
+      this.get('/api/activities.json', function() {
+        return [200, { 'Content-Type': 'application/json' }, JSON.stringify(ACTIVITIES)];
+      });
+    });
+  },
+
+  afterEach() {
+    this.server.shutdown();
+  }
+});
 
 const ACTIVITIES = {
   activities: [
@@ -17,17 +29,7 @@ const ACTIVITIES = {
   ]
 };
 
-function setupActivity() {
-  return new Pretender(function() {
-    this.get('/api/activities.json', function() {
-      return [200, { 'Content-Type': 'application/json' }, JSON.stringify(ACTIVITIES)];
-    });
-  });
-}
-
 test('passes the activity', async function(assert) {
-  setupActivity();
-
   await page.visit();
 
   assert.equal(currentURL(), '/activities/1');
@@ -53,8 +55,6 @@ test('passes the activity', async function(assert) {
 });
 
 test('count errors', async function(assert) {
-  setupActivity();
-
   await page.visit();
 
   assert.equal(page.errorCount, '0', 'Starts the game without errors.');
@@ -85,13 +85,9 @@ test('count errors', async function(assert) {
   assert.equal(page.errorCount, '2', 'Game completed.');
 });
 
-test('displays the title and subtitle', function(assert) {
-  setupActivity();
+test('displays the title and subtitle', async function(assert) {
+  await page.visit();
 
-  page.visit();
-
-  andThen(function() {
-    assert.equal(page.title, 'title', 'Displays the title');
-    assert.equal(page.subtitle, 'subtitle', 'Display the subtitle');
-  });
+  assert.equal(page.title, 'title', 'Displays the title');
+  assert.equal(page.subtitle, 'subtitle', 'Display the subtitle');
 });
